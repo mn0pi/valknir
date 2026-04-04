@@ -1,0 +1,9 @@
+[package]
+name = "valknir"
+verion = "0.0.1"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.6", features = ["derive"] }
+tree-sitter = "0.26"
+tree-sitter-c = "0.24"
