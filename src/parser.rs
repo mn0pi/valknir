@@ -11,19 +11,13 @@ pub fn parse(source: &str) -> Tree {
     parser.parse(source, None).expect("Failed to parse")
 }
 
-pub fn find_malloc_calls(node: Node, source: &str) {
+pub fn find_fn_calls(node: Node, source: &str, fn_name: &str) {
     let mut cursor = node.walk();
 
-    find_nodes(node, &mut cursor, source, "malloc");
+    find_nodes(node, &mut cursor, source, fn_name);
 }
 
-pub fn find_free_calls(node: Node, source: &str) {
-    let mut cursor = node.walk();
-
-    find_nodes(node, &mut cursor, source, "free");
-}
-
-fn find_nodes(node: Node, cursor: &mut TreeCursor, source: &str, to_find: &str) {
+pub fn find_nodes(node: Node, cursor: &mut TreeCursor, source: &str, to_find: &str) {
     // Check current node
     if node.kind() == "call_expression" {
         if let Some(func_node) = node.child_by_field_name("function") {
