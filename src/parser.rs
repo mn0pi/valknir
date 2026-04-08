@@ -44,9 +44,7 @@ pub fn find_nodes(node: Node, source: &str, allocations: &mut AllocationMap) {
                 }
             }
         }
-    }
-
-    if node.kind() == "call_expression" {
+    } else if node.kind() == "call_expression" {
         if let Some(func_name) = get_function_name(node, source) {
             if func_name == "free" {
                 if let Some(arg_node) = node.child_by_field_name("arguments") {
