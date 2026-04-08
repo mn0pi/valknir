@@ -17,6 +17,12 @@ pub fn find_malloc_calls(node: Node, source: &str) {
     find_nodes(node, &mut cursor, source, "malloc");
 }
 
+pub fn find_free_calls(node: Node, source: &str) {
+    let mut cursor = node.walk();
+
+    find_nodes(node, &mut cursor, source, "free");
+}
+
 fn find_nodes(node: Node, cursor: &mut TreeCursor, source: &str, to_find: &str) {
     // Check current node
     if node.kind() == "call_expression" {
