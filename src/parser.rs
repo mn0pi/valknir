@@ -11,16 +11,10 @@ pub fn parse(source: &str) -> Tree {
     parser.parse(source, None).expect("Failed to parse")
 }
 
-pub fn find_malloc_calls(node: Node, source: &str) {
+pub fn find_fn_calls(node: Node, source: &str, fn_name: &str) {
     let mut cursor = node.walk();
 
-    find_nodes(node, &mut cursor, source, "malloc");
-}
-
-pub fn find_free_calls(node: Node, source: &str) {
-    let mut cursor = node.walk();
-
-    find_nodes(node, &mut cursor, source, "free");
+    find_nodes(node, &mut cursor, source, fn_name);
 }
 
 fn find_nodes(node: Node, cursor: &mut TreeCursor, source: &str, to_find: &str) {

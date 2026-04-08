@@ -1,7 +1,7 @@
 mod cli;
 mod parser;
 
-use crate::parser::{find_free_calls, find_malloc_calls, parse};
+use crate::parser::{find_fn_calls, parse};
 use clap::Parser;
 use cli::{Cli, Commands};
 use std::fs;
@@ -18,8 +18,8 @@ fn main() {
             let tree = parse(&code);
             let root = tree.root_node();
 
-            find_malloc_calls(root, &code);
-            find_free_calls(root, &code);
+            find_fn_calls(root, &code, "malloc");
+            find_fn_calls(root, &code, "free");
         }
     };
 }
