@@ -1,30 +1,32 @@
 # Valknir
 
-> Experimental static analysis engine for low-level memory vulnerability research.
+Valknir is a static analysis engine for C programs, written in Rust.
 
-Valknir is a systems-focused static analyzer written in Rust that explores unsafe memory behaviour in C programs through AST-driven analysis.
+It analyses source code for unsafe memory behaviour — buffer overflows, 
+double frees, use-after-free, memory leaks — and produces output that 
+explains not just what the vulnerability is, but why dangerous memory 
+states emerge and how they can be exploited.
 
-The long-term goal is not just to detect vulnerabilities, but to build a transparent analysis engine that exposes *why* dangerous memory states emerge.
-
+Built as a learning project at the intersection of systems programming, 
+binary exploitation research, and compiler-style analysis. The process 
+of building it is as much the point as the tool itself.
 ---
 
-# Vision
+## Vision
 
-Modern static analyzers are often opaque, heavyweight, or inaccessible to learners.
+Most static analyzers are black boxes. They tell you something is wrong 
+without showing you why, which is fine for production use but useless 
+for actually understanding vulnerability classes.
 
-Valknir is designed differently:
+Valknir is designed to be transparent by default:
 
-- minimal core architecture
-- transparent internal state tracking
-- AST-first analysis
-- educational by design
-- focused on real memory corruption primitives
+- every detection is explainable
+- every state transition is observable  
+- the analysis logic is readable, not hidden behind framework abstractions
 
-The project doubles as:
-
-1. a practical vulnerability research tool
-2. a public systems programming study
-3. a deep dive into compiler-style analysis pipelines
+The goal is a tool that teaches as it analyses — useful for vulnerability 
+research and for anyone trying to understand how memory corruption actually 
+works at the level where exploits live.
 
 ---
 
@@ -214,19 +216,13 @@ Expect rapid architectural changes.
 
 ---
 
-# Contributing
+## Author
 
-This project is currently highly experimental.
+mn0pi — software developer, learning systems programming and binary 
+exploitation from first principles.
 
-Contributions, ideas, critiques, and vulnerability research discussions are welcome.
-
----
-
-# Author
-
-Created by mn0pi.
-
-Systems programming, static analysis, memory safety research.
-
+Valknir is documented as part of a broader research and writing practice 
+at [7thmagpie.xyz](https://7thmagpie.xyz) — where the technical work 
+connects to wider patterns in systems thinking.
 
 
