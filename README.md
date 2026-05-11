@@ -7,9 +7,9 @@ double frees, use-after-free, memory leaks — and produces output that
 explains not just what the vulnerability is, but why dangerous memory 
 states emerge and how they can be exploited.
 
-Built as a learning project at the intersection of systems programming, 
-binary exploitation research, and compiler-style analysis. The process 
-of building it is as much the point as the tool itself.
+Built as a learning project at the intersection of systems programming, binary exploitation research, and compiler-style analysis. 
+The process of building it is as much the point as the tool itself. 
+
 ---
 
 ## Vision
