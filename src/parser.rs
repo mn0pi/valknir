@@ -16,6 +16,7 @@ pub fn parse(source: &str) -> Tree {
 }
 
 pub fn analyse(source: &str) {
+    //TODO: Change this to return structured result rather than printing directly from find_nodes
     let mut allocations: AllocationMap = HashMap::new();
 
     let tree = parse(source);
@@ -53,6 +54,8 @@ fn find_nodes(node: Node, source: &str, allocations: &mut AllocationMap) {
 
             if func_name == "free" {
                 if let Some(arg_node) = child.child_by_field_name("arguments") {
+                    //TODO: Only handles simple identifier arguments e.g. free(p)
+                    // complex expressions e.g. free(ptr->field) not yet supported
                     if let Some(identifier_node) = arg_node.child(1) {
                         if let Some(identifier) = get_identifier_name(identifier_node, source) {
                             let line = node.start_position().row + 1;
@@ -69,16 +72,15 @@ fn find_nodes(node: Node, source: &str, allocations: &mut AllocationMap) {
                                         alloc_line,
                                         free_line,
                                     } => {
+                                        println!("[valknir] double free detected");
+                                        println!("Pointer: {}", &identifier);
+                                        println!("Allocation: line {}", alloc_line);
+                                        println!("First free: line {}", free_line);
+                                        println!("Second free: line {}", line);
                                         println!(
-                                            r#"[valknir] double free detected
-                                                Pointer: {}
-                                                Allocation: line {}
-                                                First free: line {}
-                                                Second free: line {}
-                                                Explanation: Memory freed more than once. This can corrupt heap metadata and may lead to arbitrary code execution.
-                                                "#,
-                                            &identifier, alloc_line, free_line, line
+                                            "Explanation: Memory freed more than once. This can corrupt heap metadata and may lead to arbitrary code execution."
                                         );
+                                        println!();
                                     }
                                 }
                             } else {
@@ -92,9 +94,6 @@ fn find_nodes(node: Node, source: &str, allocations: &mut AllocationMap) {
                 }
             }
         }
-    }
-
-    for child in node.children(&mut node.walk()) {
         find_nodes(child, source, allocations);
     }
 }
@@ -116,7 +115,6 @@ fn get_identifier_name(node: Node, source: &str) -> Option<String> {
             }
         }
         "arguments" => {
-            println!("arguments...reiterrating");
             let inner = node.child_by_field_name("identifier")?;
             get_identifier_name(inner, source)
         }
