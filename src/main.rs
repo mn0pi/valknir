@@ -2,7 +2,7 @@ mod analysis;
 mod cli;
 mod parser;
 
-use crate::parser::{analyse, parse};
+use crate::parser::analyse;
 use clap::Parser;
 use cli::{Cli, Commands};
 use std::fs;
