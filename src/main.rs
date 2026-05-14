@@ -1,7 +1,8 @@
+mod analysis;
 mod cli;
 mod parser;
 
-use crate::parser::{find_malloc_calls, parse};
+use crate::parser::analyse;
 use clap::Parser;
 use cli::{Cli, Commands};
 use std::fs;
@@ -15,10 +16,7 @@ fn main() {
 
             let code = fs::read_to_string(&file).expect("Could not read file");
 
-            let tree = parse(&code);
-            let root = tree.root_node();
-
-            find_malloc_calls(root, &code);
+            analyse(&code);
         }
     };
 }
