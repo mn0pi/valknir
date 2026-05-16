@@ -18,9 +18,9 @@ simultaneous write access to the same memory.
 
 ```c
 int *p = (int *)malloc(20);
+free(p);
 int *q = (int *)malloc(20);
 // ...do some things with *q
-free(p);
 free(p);
 // ...continue using q
 ```
